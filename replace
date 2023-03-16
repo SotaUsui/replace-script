@@ -9,16 +9,26 @@ if len(sys.argv) == 4:
     newpattern = sys.argv[3]
 
 
-    print(newpattern)
-
-    '''
     if os.path.exists(curr_path + path) == True:
-
-
+        path = curr_path + path
+        
+        print(path)
+        directory =1
+        while directory !=0:
+            directory=0
+            print(path)
+            if os.path.isdir(path) == True:
+                for content in os.listdir(path):
+                    print("this is directory")
+                    directory +=1
+                    path = path + "/" + content
+                    print(content)
+                    print('--------')
+            else:
+                print("this is file")
 
     else:
         print("The path doesn't exist.\nCheck the README.md, if you don't know the correct syntax.")
-    '''
 
 else:
     print("This is invalid syntax.\nCheck the README.md, if you don't know")
