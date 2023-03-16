@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import os.path, sys, shutil
+import os.path, sys, shutil, pathlib
 
 curr_path = "/home/usuisot/replace-script/"
 if len(sys.argv) == 4:
@@ -12,20 +12,26 @@ if len(sys.argv) == 4:
     if os.path.exists(curr_path + path) == True:
         path = curr_path + path
         
-        print(path)
-        directory =1
-        while directory !=0:
-            directory=0
+        while os.path.isdir(path) ==True:
             print(path)
-            if os.path.isdir(path) == True:
-                for content in os.listdir(path):
-                    print("this is directory")
-                    directory +=1
-                    path = path + "/" + content
-                    print(content)
-                    print('--------')
-            else:
-                print("this is file")
+            for name in os.listdir(path):
+                content = path+'/'+name
+                if os.path.isfile(content):
+                    
+                    #change the content of file
+                    with open(content, 'r') as in_file:
+                        data = in_file.read()
+                        data = data.replace(oldpattern, newpattern)
+                    with open(content, 'w') as in_file:
+                        in_file.write(data)
+                    
+                    #cahnge the name of file
+                    if oldpattern in name:
+                        new_name = name.replace(oldpattern, newpattern)
+                        os.rename(path +'/'+ name, path +'/'+ new_name)
+            
+            path = path+'/'+os.listdir(path)[0]
+
 
     else:
         print("The path doesn't exist.\nCheck the README.md, if you don't know the correct syntax.")
